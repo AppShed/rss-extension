@@ -1,0 +1,41 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    rss.config:
+        class: AppBundle\Service\Config
+        calls:
+            - [setRequest, [@request_stack]]
+    rss.description:
+        class: AppBundle\Service\Description
+        arguments:
+              config: "@rss.config"
+    rss.media:
+        class: AppBundle\Service\Media
+        arguments:
+              config: "@rss.config"
+    rss.element:
+        class: AppBundle\Service\Element
+        arguments:
+            config: "@rss.config"
+            media: "@rss.media"
+            description: "@rss.description"
+                
+    rss.normalizer:
+        class: AppBundle\Service\ArticleNormalizer
+        arguments:
+            config: "@rss.config"
+            media: "@rss.media"
+            description: "@rss.description"
+
+    rss.feed:
+        class: AppBundle\Service\Feed
+        arguments:
+            config: "@rss.config"
+            element: "@rss.element"
+            normalizer: "@rss.normalizer"    
+            
+            
+            
