@@ -60,7 +60,13 @@ class Element {
         $articleScreen->addClass('rss-article');
 
 
-
+        if ($this->config->getDateinarticle()) {
+            $articleScreen->addChild($d = new \AppShed\Remote\Element\Item\Text($item->getDate()->format('D d m Y h:i')));
+            $d->setAlign('right');
+            $d->addClass('rss-article-date');
+            $d->setSize(13);
+            $d->setHrAfter(false);
+        }
 
 
         if ($item->getImage()) {
@@ -95,13 +101,7 @@ class Element {
             
             $seeAllLink->setWebLink($item->getLink());
         }
-        if ($this->config->getDateinarticle()) {
-            $articleScreen->addChild($d = new \AppShed\Remote\Element\Item\Text($item->getDate()->format('D d m Y h:i')));
-            $d->setAlign('right');
-            $d->addClass('rss-article-date');
-            $d->setSize(13);
-            $d->setHrAfter(false);
-        }
+        
 
 
 
