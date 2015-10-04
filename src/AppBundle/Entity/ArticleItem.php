@@ -21,7 +21,10 @@ class ArticleItem {
         return $this->title;
     }
 
-    public function getSubtitle() {
+    public function getSubtitle($return = true) {
+        if (!$return) {
+            return null;
+        }
         return $this->subtitle;
     }
 

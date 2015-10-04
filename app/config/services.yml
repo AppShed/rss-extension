@@ -8,6 +8,8 @@ services:
         class: AppBundle\Service\Config
         calls:
             - [setRequest, [@request_stack]]
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"    
     rss.description:
         class: AppBundle\Service\Description
         arguments:

@@ -50,6 +50,7 @@ class Feed {
         //'http://feeds.eonline.com/eonline/uk/topstories'
         try {
 
+            
             $reader = new Reader;
             $resource = $reader->download($this->config->getUrl());
 
@@ -61,17 +62,13 @@ class Feed {
 
             $resultScreen = $screen = new Screen($this->config->getScreenTitle($feed->getTitle()));
             $screen->addClass('rss-screen');
-            $screen->addClass('parent' . $this->config->getParent());
+            $screen->addClass('parent ');
 
-            if ($this->config->getRefreshbtn()) {
-                $screen->addChild($b = new AppBuilderAPIHeaderButtonItem(''));
-                $b->setRefreshLink(true);
-                $b->addClass('refresh');
-            }
+            $screen->setRefreshable($this->config->getRefreshbtn());
 
             foreach ($feed->getItems() as $item) {
                 if ($this->checkFullLimit()) {
-                    //   break;
+                       break;
                 }
 
                 $item = $this->normalizer->getItem($item);
@@ -80,7 +77,7 @@ class Feed {
                     $screen->addChild($readmore = new Thumb('Read more...', ''));
                     $screen = new Screen($this->config->getScreenTitle($feed->getTitle()));
                     $screen->addClass('rss-screen');
-                    $screen->addClass('parent' . $this->config->getParent());
+                    $screen->addClass('parent ');
                     $readmore->setScreenLink($screen);
                 }
 

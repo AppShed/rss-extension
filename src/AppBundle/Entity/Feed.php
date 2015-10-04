@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\FeedRepository")
  */
-class Feed
-{
+class Feed {
+
     /**
      * @var integer
      *
@@ -24,7 +24,7 @@ class Feed
     /**
      * @var string
      *
-     * @ORM\Column(name="rssScreenTitle", type="string", length=255)
+     * @ORM\Column(name="rssScreenTitle", type="string", length=255, nullable=true)
      */
     private $screenTitle;
 
@@ -33,82 +33,77 @@ class Feed
      *
      * @ORM\Column(name="rssFullLink", type="boolean")
      */
-    private $rssFullLink;
+    private $fullLink = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssCleanHtml", type="boolean")
      */
-    private $cleanHtml;
+    private $cleanHtml = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssNoDescription", type="boolean")
      */
-    private $noDescription;
+    private $noDescription = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssDateInArticle", type="boolean")
      */
-    private $dateInArticle;
+    private $dateInArticle = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssHideListDate", type="boolean")
      */
-    private $hideListDate;
+    private $hideListDate = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssFullText", type="boolean")
      */
-    private $fullText;
+    private $fullText = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="rssRefreshButton", type="boolean")
      */
-    private $refreshButton;
+    private $refreshButton = true;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rssImage", type="string", length=255)
+     * @ORM\Column(name="rssImage", type="string", length=255, nullable=true)
      */
     private $image;
 
-    
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
-    
     /**
      * @var string
      *
-     * @ORM\Column(name="secret", type="string", length=255)
+     * @ORM\Column(name="identifier", type="string", length=255)
      */
-    private $secret;
-
-  
+    private $identifier;
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -118,8 +113,7 @@ class Feed
      * @param string $screenTitle
      * @return Feed
      */
-    public function setScreenTitle($screenTitle)
-    {
+    public function setScreenTitle($screenTitle) {
         $this->screenTitle = $screenTitle;
 
         return $this;
@@ -130,32 +124,29 @@ class Feed
      *
      * @return string 
      */
-    public function getScreenTitle()
-    {
+    public function getScreenTitle() {
         return $this->screenTitle;
     }
 
     /**
-     * Set rssFullLink
+     * Set fullLink
      *
-     * @param boolean $rssFullLink
+     * @param boolean $fullLink
      * @return Feed
      */
-    public function setRssFullLink($rssFullLink)
-    {
-        $this->rssFullLink = $rssFullLink;
+    public function setFullLink($rssFullLink) {
+        $this->fullLink = $rssFullLink;
 
         return $this;
     }
 
     /**
-     * Get rssFullLink
+     * Get fullLink
      *
      * @return boolean 
      */
-    public function getRssFullLink()
-    {
-        return $this->rssFullLink;
+    public function getFullLink() {
+        return $this->fullLink;
     }
 
     /**
@@ -164,8 +155,7 @@ class Feed
      * @param boolean $cleanHtml
      * @return Feed
      */
-    public function setCleanHtml($cleanHtml)
-    {
+    public function setCleanHtml($cleanHtml) {
         $this->cleanHtml = $cleanHtml;
 
         return $this;
@@ -176,8 +166,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getCleanHtml()
-    {
+    public function getCleanHtml() {
         return $this->cleanHtml;
     }
 
@@ -187,8 +176,7 @@ class Feed
      * @param boolean $noDescription
      * @return Feed
      */
-    public function setNoDescription($noDescription)
-    {
+    public function setNoDescription($noDescription) {
         $this->noDescription = $noDescription;
 
         return $this;
@@ -199,8 +187,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getNoDescription()
-    {
+    public function getNoDescription() {
         return $this->noDescription;
     }
 
@@ -210,8 +197,7 @@ class Feed
      * @param boolean $dateInArticle
      * @return Feed
      */
-    public function setDateInArticle($dateInArticle)
-    {
+    public function setDateInArticle($dateInArticle) {
         $this->dateInArticle = $dateInArticle;
 
         return $this;
@@ -222,8 +208,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getDateInArticle()
-    {
+    public function getDateInArticle() {
         return $this->dateInArticle;
     }
 
@@ -233,8 +218,7 @@ class Feed
      * @param boolean $hideListDate
      * @return Feed
      */
-    public function setHideListDate($hideListDate)
-    {
+    public function setHideListDate($hideListDate) {
         $this->hideListDate = $hideListDate;
 
         return $this;
@@ -245,8 +229,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getHideListDate()
-    {
+    public function getHideListDate() {
         return $this->hideListDate;
     }
 
@@ -256,8 +239,7 @@ class Feed
      * @param boolean $fullText
      * @return Feed
      */
-    public function setFullText($fullText)
-    {
+    public function setFullText($fullText) {
         $this->fullText = $fullText;
 
         return $this;
@@ -268,8 +250,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getFullText()
-    {
+    public function getFullText() {
         return $this->fullText;
     }
 
@@ -279,8 +260,7 @@ class Feed
      * @param boolean $refreshButton
      * @return Feed
      */
-    public function setRefreshButton($refreshButton)
-    {
+    public function setRefreshButton($refreshButton) {
         $this->refreshButton = $refreshButton;
 
         return $this;
@@ -291,8 +271,7 @@ class Feed
      *
      * @return boolean 
      */
-    public function getRefreshButton()
-    {
+    public function getRefreshButton() {
         return $this->refreshButton;
     }
 
@@ -302,8 +281,7 @@ class Feed
      * @param string $image
      * @return Feed
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -314,8 +292,7 @@ class Feed
      *
      * @return string 
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -325,8 +302,7 @@ class Feed
      * @param string $url
      * @return Feed
      */
-    public function setUrl($url)
-    {
+    public function setUrl($url) {
         $this->url = $url;
 
         return $this;
@@ -337,31 +313,29 @@ class Feed
      *
      * @return string 
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 
     /**
-     * Set secret
+     * Set identifier
      *
-     * @param string $secret
+     * @param string $identifier
      * @return Feed
      */
-    public function setSecret($secret)
-    {
-        $this->secret = $secret;
+    public function setIdentifier($identifier) {
+        $this->identifier = $identifier;
 
         return $this;
     }
 
     /**
-     * Get secret
+     * Get identifier
      *
      * @return string 
      */
-    public function getSecret()
-    {
-        return $this->secret;
+    public function getIdentifier() {
+        return $this->identifier;
     }
+
 }

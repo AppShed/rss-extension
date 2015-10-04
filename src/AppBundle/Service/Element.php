@@ -33,7 +33,7 @@ class Element {
         $this->description = $description;
     }
 
-    public function addItemToScreen(\AppBundle\Entity\ArticleItem $item, \AppShed\Remote\Element\Screen\Screen $screen) {
+    public function addItemToScreen(\AppBundle\Entity\ArticleItem $item, \AppShed\Remote\Element\Screen\Screen $rootScreen) {
 
         if ($item->isImageExist()) {
             $link = new \AppShed\Remote\Element\Item\Thumb($item->getTitle(), $item->getSubtitle(), new \AppShed\Remote\Style\Image($item->getImage()));
@@ -43,9 +43,9 @@ class Element {
         $link->setPaddingBottom('20');
         $link->setHrAfter(true);
 
-        $screen->addChild($link);
+        $rootScreen->addChild($link);
         if ($this->config->getHidelistdate()) {
-            $screen->addChild($date = new \AppShed\Remote\Element\Item\HTML($item->date));
+            $rootScreen->addChild($date = new \AppShed\Remote\Element\Item\HTML($item->getDate()->format('D d m Y h:i')));
             $date->setHrAfter(true);
             $link->setHrAfter(false);
         }
@@ -55,30 +55,18 @@ class Element {
         $article = new \AppShed\Remote\Element\Screen\Screen($item->getTitle());
         $article->addChild(new \AppShed\Remote\Element\Item\HTML($item->getFulltext()));
 
-        
-       $title = $this->config->getScreenTitle($item->getTitle());
+        $link->setScreenLink($articleScreen = new \AppShed\Remote\Element\Screen\Screen($this->config->getScreenTitle($item->getTitle())));
+        $articleScreen->setCustomCSS('.item.html img { max-width: 100%;  }');
+        $articleScreen->addClass('rss-article');
 
-        $link->setScreenLink($screenWithArticle = new \AppShed\Remote\Element\Screen\Screen($title));
-        $screenWithArticle->setCustomCSS('.item.html img { max-width: 100%;  }');
-        $screenWithArticle->addClass('rss-article');
 
-        if ($this->config->getNodescription()) {
-            $subtitle = '';
-        }
 
-        if ($this->config->getDateinarticle()) {
-            $screenWithArticle->addChild($d = new \AppShed\Remote\Element\Item\Text($item->getDate()));
-            $d->setAlign('right');
-            $d->addClass('rss-article-date');
-            $d->setSize(13);
-            $d->setHrAfter(false);
-        }
 
 
         if ($item->getImage()) {
-            $screenWithArticle->addChild($title = new \AppShed\Remote\Element\Item\Thumb($item->getTitle(), $item->getSubtitle(), new \AppShed\Remote\Style\Image($item->getImage())));
+            $articleScreen->addChild($title = new \AppShed\Remote\Element\Item\Thumb($item->getTitle(), $item->getSubtitle($this->config->getNodescription()), new \AppShed\Remote\Style\Image($item->getImage())));
         } else {
-            $screenWithArticle->addChild($title = new \AppShed\Remote\Element\Item\Plain($item->getTitle(), $item->getSubtitle()));
+            $articleScreen->addChild($title = new \AppShed\Remote\Element\Item\Plain($item->getTitle(), $item->getSubtitle($this->config->getNodescription())));
         }
 
 
@@ -88,7 +76,7 @@ class Element {
 
 //        echo $item->getFulltext();
 
-        $screenWithArticle->addChild(new \AppShed\Remote\Element\Item\HTML($item->getFulltext()));
+        $articleScreen->addChild(new \AppShed\Remote\Element\Item\HTML($item->getFulltext()));
 
         if ($this->config->getFulllink()) {
 
@@ -99,7 +87,7 @@ class Element {
                 $img = 'http://appshed.com/components/com_appbuilder/assets/images/appbuilder/rss.gif';
             }
 
-            $screenWithArticle->addChild(
+            $articleScreen->addChild(
                     $seeAllLink = new \AppShed\Remote\Element\Item\Link(
                     $this->config->getFulltext('See full article'), new \AppShed\Remote\Style\Image($img)
             ));
@@ -107,13 +95,20 @@ class Element {
             
             $seeAllLink->setWebLink($item->getLink());
         }
+        if ($this->config->getDateinarticle()) {
+            $articleScreen->addChild($d = new \AppShed\Remote\Element\Item\Text($item->getDate()->format('D d m Y h:i')));
+            $d->setAlign('right');
+            $d->addClass('rss-article-date');
+            $d->setSize(13);
+            $d->setHrAfter(false);
+        }
 
 
 
 //                $screen->addChild(
 //                        new Image(new \AppShed\Remote\Style\Image("http://images.nationalgeographic.com/wpf/media-live/photos/000/005/cache/domestic-cat_516_600x450.jpg"))
 //                );
-        $screen->addChild($link);
+        //$rootScreen->addChild($link);
     }
 
 }

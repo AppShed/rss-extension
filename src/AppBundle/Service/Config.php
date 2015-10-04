@@ -11,8 +11,32 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Config {
 
+    /**
+     *
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    function __construct(\Doctrine\ORM\EntityManager $em) {
+        $this->em = $em;
+    }
+
+    /**
+     *
+     * @var \AppBundle\Entity\Feed;
+     */
+    private $feed;
+
+    /**
+     *
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     protected $request;
 
+    /**
+     *
+     * @var string
+     */
     private $url;
 
     function setUrl($url) {
@@ -21,15 +45,24 @@ class Config {
 
     public function setRequest(RequestStack $request_stack) {
         $this->request = $request_stack->getCurrentRequest();
+
+        $identifier = $this->request->query->get('identifier', null);
+
+        if ($identifier) {
+            $feed = $this->em->getRepository('AppBundle:Feed')->findOneBy(['identifier' => $identifier]);
+            if ($feed) {
+                $this->feed = $feed;
+            }
+        }
     }
 
     function getUrl() {
-        return $this->request->query->get('url', $this->url);
+        return $this->feed->getUrl();
     }
 
     public function getScreenTitle($feedTtle) {
 
-        $title = urldecode($this->request->query->get('screenTitle'));
+        $title = urldecode($this->feed->getScreenTitle());
         if (empty($title)) {
             return mb_substr($feedTtle, 0, 10);
         }
@@ -41,35 +74,31 @@ class Config {
     }
 
     public function getFulllink() {
-        return $this->request->query->get('fulllink', true);
+        return $this->feed->getFullLink();
     }
 
     public function getCleanhtml() {
-        return $this->request->query->get('cleanhtml');
+        return $this->feed->getCleanHtml();
     }
 
     public function getNodescription() {
-        return $this->request->query->get('nodescription');
+        return $this->feed->getNoDescription();
     }
 
     public function getHidelistdate() {
-        return $this->request->query->get('hidelistdate', false);
+        return $this->feed->getHideListDate();
     }
 
     public function getDateinarticle() {
-        return $this->request->query->get('dateinarticle');
+        return $this->feed->getDateInArticle();
     }
 
     public function getRefreshbtn() {
-        return $this->request->query->get('refreshbtn', false);
+        return $this->feed->getRefreshButton();
     }
 
     public function getImage() {
-        return $this->request->query->get('image');
-    }
-
-    public function getParent() {
-        return $this->request->query->get('parent');
+        return $this->feed->getImage();
     }
 
 }

@@ -52,7 +52,7 @@ class ArticleNormalizer {
         }
 
         $article->setImage($this->media->getImage($article));
-        $article->setLink($article->getLink());
+        $article->setLink($item->getEnclosureUrl());
         return $article;
     }
 

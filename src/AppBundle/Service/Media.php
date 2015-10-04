@@ -25,16 +25,23 @@ class Media {
     }
 
     public function setItem(\PicoFeed\Parser\Item $item) {
-
-        $this->toArray($item->xml->children());
+        $this->findImage($item->xml);
     }
 
-    private function toArray(\SimpleXMLElement $el) {
-        $attr = [];
+    private function findImage(\SimpleXMLElement $el) {
+        $ns = $el->getNamespaces(true);
+        foreach ($el->children($ns['media']) as $mmm) {
+            $this->url = $mmm->attributes()->url;
+        }
+
+
 
         foreach ($el as $key => $value) {
-
             if ($value->getName() == 'imgURL') {
+                $this->url = strval($value);
+            }
+            if ($value->getName() == 'media') {
+                print_r($value->attributes());
                 $this->url = strval($value);
             }
         }
@@ -48,8 +55,6 @@ class Media {
         $regex = "<img.+?src=\"(.+?)\".+?>";
         preg_match_all($regex, $text, $matches);
         foreach ($matches[1] as $url) {
-
-
             //  echo $newurl.'<br>';
             $text = str_replace($url, $this->fixLink($url), $text);
         }
