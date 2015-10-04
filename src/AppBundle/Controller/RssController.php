@@ -10,18 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class RssController extends Controller {
 
-    private function configure(\AppBundle\Service\Config $config) {
-        //$config->setUrl('http://rss.cnn.com/rss/edition_world.rss');
-        $config->setUrl('http://tamilwin.easyms.com/contents/rss/flash.xml');
-
-        $config->setDateinarticle(true);
-        $config->setCleanhtml(true);
-        $config->setFulllink(true);
-        $config->setHidelistdate(true);
-        $config->setNodescription(true);
-        $config->setRefreshbtn(true);
-        $config->setScreenTitle('title');
-    }
+    //http://rss.cnn.com/rss/edition_world.rss
+    //http://tamilwin.easyms.com/contents/rss/flash.xml
 
     /**
      * @Route("/edit/{identifier}", name="editor")
