@@ -20,35 +20,45 @@ class Media {
 
     function __construct(Config $config) {
         $this->config = $config;
-
         $this->urldata = parse_url($this->config->getUrl());
     }
 
     public function setItem(\PicoFeed\Parser\Item $item) {
+        $this->url = null;
         $this->findImage($item->xml);
     }
 
     private function findImage(\SimpleXMLElement $el) {
+        $found = false;
         $ns = $el->getNamespaces(true);
-        foreach ($el->children($ns['media']) as $mmm) {
-            $this->url = $mmm->attributes()->url;
+        if (array_key_exists('media', $ns)) {
+            foreach ($el->children($ns['media']) as $mmm) {
+                $url = strval($mmm->attributes()->url);
+                if (empty($this->url) && !empty($url)) {
+                    $this->url = $url;
+                }
+            }
         }
-
-
-
         foreach ($el as $key => $value) {
+            $url = strval($value);
             if ($value->getName() == 'imgURL') {
-                $this->url = strval($value);
+                if (empty($this->url) && !empty($url)) {
+                    $this->url = strval($value);
+                }
             }
             if ($value->getName() == 'media') {
-                print_r($value->attributes());
-                $this->url = strval($value);
+                if (empty($this->url) && !empty($url)) {
+                    $this->url = strval($value);
+                }
             }
         }
     }
 
     public function getImage() {
-        return $this->fixLink($this->url);
+        if ($this->url) {
+            return $this->fixLink($this->url);
+        }
+        return null;
     }
 
     private function imageslink($text) {

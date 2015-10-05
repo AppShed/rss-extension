@@ -36,7 +36,7 @@ class Feed {
      */
     private $normalizer;
     private $fulllimit = 40;
-    private $limit = 6;
+    private $limit = 20;
     private $position = 0;
 
     function __construct(Config $config, Element $element, ArticleNormalizer $normalizer) {
@@ -60,12 +60,11 @@ class Feed {
 
             $feed = $parser->execute();
 
-            $resultScreen = $screen = new Screen($this->config->getScreenTitle($feed->getTitle()));
+            $resultScreen = $screen = new Screen ($this->config->getScreenTitle($feed->getTitle()));
             $screen->addClass('rss-screen');
             $screen->addClass('parent ');
 
             $screen->setRefreshable($this->config->getRefreshbtn());
-
             foreach ($feed->getItems() as $item) {
                 if ($this->checkFullLimit()) {
                        break;
