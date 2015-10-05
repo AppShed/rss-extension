@@ -18,7 +18,7 @@ class RssController extends Controller {
      * @Cache(expires="-2 days", public=false, smaxage="0", maxage="0")
      * @Template()
      */
-    public function indexAction(Request $request, $identifier ) {
+    public function indexAction(Request $request, $identifier = null) {
 
         $identifier = $request->query->get('identifier', $identifier);
 
