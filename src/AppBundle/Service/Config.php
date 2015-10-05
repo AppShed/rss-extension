@@ -69,8 +69,9 @@ class Config {
         return $title;
     }
 
-    public function getFulltext($default) {
-        return $this->request->query->get('fulltext', $default);
+    public function getFulltext() {
+        $str = $this->feed->getFullText();
+        return empty($str) ? 'See full article' : $str;
     }
 
     public function getFulllink() {

@@ -64,9 +64,9 @@ class Feed {
     private $hideListDate = false;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="rssFullText", type="boolean")
+     * @ORM\Column(name="rssFullText", type="string")
      */
     private $fullText = true;
 

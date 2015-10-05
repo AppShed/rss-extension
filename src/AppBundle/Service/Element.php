@@ -95,7 +95,7 @@ class Element {
 
             $articleScreen->addChild(
                     $seeAllLink = new \AppShed\Remote\Element\Item\Link(
-                    $this->config->getFulltext('See full article'), new \AppShed\Remote\Style\Image($img)
+                    $this->config->getFulltext(), new \AppShed\Remote\Style\Image($img)
             ));
 
             
