@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +15,10 @@ class RssController extends Controller {
 
     /**
      * @Route("/edit/{identifier}", name="editor")
+     * @Cache(expires="-2 days", public=false, smaxage="0", maxage="0")
      * @Template()
      */
-    public function indexAction(Request $request, $identifier = 'daasdsa') {
+    public function indexAction(Request $request, $identifier ) {
 
         $identifier = $request->query->get('identifier', $identifier);
 
