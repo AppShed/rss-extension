@@ -5,12 +5,22 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>Login/My Apps</title>
         <link rel="stylesheet" href="css/bundle.css">
-        <link href="http://home.appshed.com/components/com_appbuilder/assets/compressed/css/html-fake.css" rel="stylesheet">
+        <style>
+            .form-group {
+                margin-bottom: 0px;
+            }
+
+            .checkbox, .radio {
+                position: relative;
+                display: block;
+                margin-top: 3px;
+                margin-bottom: 3px;
+            }
+        </style>
     </head>
     <body>
-        <div style="padding: 50px">
-            
-        {{form(configForm)}}
+        <div style="padding: 10px">
+            {{form(configForm)}}
         </div>
 
     </body>
