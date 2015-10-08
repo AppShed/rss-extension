@@ -24,7 +24,7 @@ class FeedType extends AbstractType {
                 ->add('refreshButton', null, ['required' => false, 'label' => 'Show refresh button.'])
                 ->add('fullLink', null, ['required' => false, 'label' => 'Show full link (allows a user to see the article fully in the source inside of the app):'])
                 ->add('fullText', null, ['required' => false, 'label' => 'Change the standard text on "Full link" of article:'])
-                ->add('image', null, ['required' => false, 'label' => 'Change image on "Full link" (insert the image link)']);
+                ->add('image', null, ['required' => false, 'label' => 'Change image on "Full link" (insert the link of the image)']);
     }
 
     /**
