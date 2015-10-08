@@ -15,16 +15,16 @@ class FeedType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('url')
-                ->add('screenTitle', null, ['label' => 'Screen Title'])
-                ->add('fullLink', null, ['required' => false])
-                ->add('cleanHtml', null, ['required' => false])
-                ->add('noDescription', null, ['required' => false])
-                ->add('dateInArticle', null, ['required' => false])
-                ->add('hideListDate', null, ['required' => false])
-                ->add('fullText', null, ['required' => false])
-                ->add('image', null, ['required' => false])
-                ->add('refreshButton', null, ['required' => false]);
+                ->add('url', null, ['label' => 'RSS link:'])
+                ->add('screenTitle', null, ['label' => 'Screen title:'])
+                ->add('cleanHtml', null, ['required' => false, 'label'=>'Show article as a plain text without original styles:'])
+                ->add('noDescription', null, ['required' => false, 'label' => 'Hide description.'])
+                ->add('dateInArticle', null, ['required' => false, 'label' => 'Show date in article.'])
+                ->add('hideListDate', null, ['required' => false, 'label' => 'Hide date in list.'])
+                ->add('refreshButton', null, ['required' => false, 'label' => 'Show refresh button.'])
+                ->add('fullLink', null, ['required' => false, 'label' => 'Show full link (allows a user to see the article fully in the source inside of the app):'])
+                ->add('fullText', null, ['required' => false, 'label' => 'Change the standard text on "Full link" of article:'])
+                ->add('image', null, ['required' => false, 'label' => 'Change image on "Full link" (insert the image link)']);
     }
 
     /**
