@@ -75,7 +75,7 @@ class Feed {
      *
      * @ORM\Column(name="rssRefreshButton", type="boolean")
      */
-    private $refreshButton = true;
+    private $refreshButton = false;
 
     /**
      * @var string
