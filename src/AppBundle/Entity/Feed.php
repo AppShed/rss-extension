@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Feed
  *
- * @ORM\Table()
+ * @ORM\Table(indexes={@ORM\Index(name="uniq", columns={"identifier"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\FeedRepository")
  */
 class Feed {
@@ -66,9 +66,9 @@ class Feed {
     /**
      * @var string
      *
-     * @ORM\Column(name="rssFullText", type="string")
+     * @ORM\Column(name="rssFullText", type="string", nullable=true)
      */
-    private $fullText = true;
+    private $fullText;
 
     /**
      * @var boolean
@@ -94,7 +94,7 @@ class Feed {
     /**
      * @var string
      *
-     * @ORM\Column(name="identifier", type="string", length=255)
+     * @ORM\Column(name="identifier", type="string", length=255, unique=true,)
      */
     private $identifier;
 

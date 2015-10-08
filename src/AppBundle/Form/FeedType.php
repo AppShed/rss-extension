@@ -23,6 +23,7 @@ class FeedType extends AbstractType {
                 ->add('dateInArticle', null, ['required' => false])
                 ->add('hideListDate', null, ['required' => false])
                 ->add('fullText', null, ['required' => false])
+                ->add('image', null, ['required' => false])
                 ->add('refreshButton', null, ['required' => false]);
     }
 
