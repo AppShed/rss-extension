@@ -68,47 +68,25 @@ class Element {
             $d->setHrAfter(false);
         }
 
-
         if ($item->getImage()) {
             $articleScreen->addChild($title = new \AppShed\Remote\Element\Item\Thumb($item->getTitle(), $item->getSubtitle($this->config->getNodescription()), new \AppShed\Remote\Style\Image($item->getImage())));
         } else {
             $articleScreen->addChild($title = new \AppShed\Remote\Element\Item\Plain($item->getTitle(), $item->getSubtitle($this->config->getNodescription())));
         }
 
-
         $title->setPaddingBottom('20');
         $title->setHrAfter(false);
-        
-
-//        echo $item->getFulltext();
-
         $articleScreen->addChild(new \AppShed\Remote\Element\Item\HTML($item->getFulltext()));
 
         if ($this->config->getFulllink()) {
-
-            
-            if ($this->config->getImage()) {
-                $img = 'http://appshed.com/components/com_appbuilder/assets/images/appbuilder/rss.gif';
-            } else {
-                $img = 'http://appshed.com/components/com_appbuilder/assets/images/appbuilder/rss.gif';
-            }
-
+            $img = $this->config->getImage('http://appshed.com/components/com_appbuilder/assets/images/appbuilder/rss.gif');
             $articleScreen->addChild(
                     $seeAllLink = new \AppShed\Remote\Element\Item\Link(
                     $this->config->getFulltext(), new \AppShed\Remote\Style\Image($img)
             ));
-
             
             $seeAllLink->setWebLink($item->getLink());
         }
-        
-
-
-
-//                $screen->addChild(
-//                        new Image(new \AppShed\Remote\Style\Image("http://images.nationalgeographic.com/wpf/media-live/photos/000/005/cache/domestic-cat_516_600x450.jpg"))
-//                );
-        //$rootScreen->addChild($link);
     }
 
 }

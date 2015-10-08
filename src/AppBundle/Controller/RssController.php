@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,14 +10,11 @@ use \AppShed\Remote\HTML\Remote;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class RssController extends Controller {
-
     //http://rss.cnn.com/rss/edition_world.rss
     //http://tamilwin.easyms.com/contents/rss/flash.xml
 
     /**
      * @Route("/edit/{identifier}", name="editor")
-     * @Cache(expires="-2 days", public=false, smaxage="0", maxage="0")
-     * @Template()
      */
     public function indexAction(Request $request, $identifier = null) {
 
@@ -36,7 +34,15 @@ class RssController extends Controller {
         $feedForm = $this->createEditForm($feed);
 
 
-        return ['configForm' => $feedForm->createView()];
+        $content = $this->renderView('AppBundle:Rss:index.html.twig', ['configForm' => $feedForm->createView()]);
+        $response = new \Symfony\Component\HttpFoundation\Response($content);
+
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     /**

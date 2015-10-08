@@ -98,8 +98,13 @@ class Config {
         return $this->feed->getRefreshButton();
     }
 
-    public function getImage() {
-        return $this->feed->getImage();
+    public function getImage($default) {
+        
+        $img = $this->feed->getImage();
+        if(empty($img)){
+            return $default;
+        }
+        return $img;
     }
 
 }
